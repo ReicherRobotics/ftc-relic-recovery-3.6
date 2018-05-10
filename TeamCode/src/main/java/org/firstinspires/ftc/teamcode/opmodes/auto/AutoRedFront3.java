@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.teamcode.opmodes.auto.commands.AutoComUltraDrive;
  */
 
 @Autonomous(name="Red Front 3", group="Main 3")
+@Disabled
 public class AutoRedFront3 extends RelicOpModes {
 
     public VuforiaHardware vuforiaHw;

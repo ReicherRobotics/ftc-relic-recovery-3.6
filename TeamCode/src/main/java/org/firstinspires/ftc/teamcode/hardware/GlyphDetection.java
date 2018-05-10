@@ -18,6 +18,9 @@ public class GlyphDetection {
         UNKNOWN;
     }
 
+    public int FIRST = 0;
+    public int SECOND = 1;
+
     private int numPlatformGlyphColorSensors = 2;
     private int numPlatformGlyphDistanceSensors = 2;
     // 0 = Second
