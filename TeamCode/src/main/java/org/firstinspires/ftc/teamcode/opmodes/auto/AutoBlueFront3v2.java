@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.opmodes.auto.commands.AutoComMecDriveRam;
  * Created by Reicher Robotics on 3/24/2018.
  */
 
-@Autonomous(name="Blue Front 3v2", group="Main 3")
+@Autonomous(name="Blue Front 3v2", group="Main 3v2")
 public class AutoBlueFront3v2 extends RelicOpModes {
 
     public VuforiaHardware vuforiaHw;
@@ -32,8 +32,6 @@ public class AutoBlueFront3v2 extends RelicOpModes {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        telemetry.addData("Status", "Working");
-        telemetry.update();
         super.runOpMode();
 
         bot.jewelRemover.extensionUp();
@@ -81,22 +79,22 @@ public class AutoBlueFront3v2 extends RelicOpModes {
         switch(pictograph){
             case RIGHT:
                 columnDistance = 40.5;
-                targetDistance = 22.5;
+                targetDistance = 23.5;
                 extraDistance = 12.0;
                 break;
             case CENTER:
                 columnDistance = 33.0;
-                targetDistance = 52.0;
+                targetDistance = 53.0;
                 extraDistance = 6.0;
                 break;
             case LEFT:
                 columnDistance = 26.5;
-                targetDistance = 39.0;
+                targetDistance = 40.0;
                 extraDistance = 0.0;
                 break;
             default:
                 columnDistance = 26.5;
-                targetDistance = 39.0;
+                targetDistance = 40.0;
                 extraDistance = 0.0;
                 break;
         }
@@ -118,10 +116,10 @@ public class AutoBlueFront3v2 extends RelicOpModes {
         }
 
         bot.glyphPlatform.up();
-        new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, 6.0).Run();
+        new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, 8.0).Run();
         bot.glyphPlatform.gripRelease();
         wait(0.2);
-        new AutoComMecDrive(this, DriveMecanum.DriveDirection.FORWARD, 1.0, 6.0).Run();
+        new AutoComMecDrive(this, DriveMecanum.DriveDirection.FORWARD, 1.0, 8.0).Run();
         bot.glyphPlatform.down();
         new AutoComMecDrive(this, DriveMecanum.DriveDirection.RIGHT, 1.0, extraDistance).Run();
 
@@ -146,7 +144,17 @@ public class AutoBlueFront3v2 extends RelicOpModes {
 
         new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, 12.0).Run();
         bot.glyphConveyors.in();
-        new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, 18.0).Run();
+        new AutoComGyroTurn(this,0.5, 90.0).Run();
+
+        double backDistance = bot.rangeLocator.getBackDistance();
+        telemetry.addData("Back Distance: ", backDistance);
+        telemetry.update();
+        targetDistance = 14.0;
+        if(backDistance > targetDistance){
+            new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, backDistance - targetDistance).Run();
+        } else {
+            new AutoComMecDriveRam(this, DriveMecanum.DriveDirection.FORWARD, 0.5, targetDistance - backDistance).Run();
+        }
         telemetry.addData("Glyph 1", bot.glyphDetection.glyphFound(bot.glyphDetection.FIRST));
         telemetry.addData("Glyph 2", bot.glyphDetection.glyphFound(bot.glyphDetection.SECOND));
         telemetry.update();
@@ -167,7 +175,7 @@ public class AutoBlueFront3v2 extends RelicOpModes {
 
         wait(0.5);
 
-        double backDistance = bot.rangeLocator.getBackDistance();
+        backDistance = bot.rangeLocator.getBackDistance();
         telemetry.addData("Back Distance: ", backDistance);
         telemetry.update();
 

@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.opmodes.auto.commands.AutoComMecDriveRam;
  * Created by Reicher Robotics on 3/24/2018.
  */
 
-@Autonomous(name="Red Front 3v2", group="Main 3")
+@Autonomous(name="Red Front 3v2", group="Main 3v2")
 public class AutoRedFront3v2 extends RelicOpModes {
 
     public VuforiaHardware vuforiaHw;
@@ -34,8 +34,6 @@ public class AutoRedFront3v2 extends RelicOpModes {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        telemetry.addData("Status", "Working");
-        telemetry.update();
         super.runOpMode();
 
         bot.jewelRemover.extensionUp();
