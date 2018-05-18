@@ -135,6 +135,12 @@ public class MainTeleOp extends RelicOpModes {
             // Right Joystick Up/Down - extends/retracts relic claw, speed based on joystick,
             //                          encoder prevents over extend/retract
             bot.relicExtension.extendRetractWithLimits(controller2.rightJoystickYValue);
+            if(controller2.leftTrigger == Controller.ButtonState.ON_PRESS){
+                bot.relicExtension.overrideLimits();
+            }
+            if(controller2.leftTrigger == Controller.ButtonState.ON_RELEASE){
+                bot.relicExtension.resetLimits();
+            }
 
             // Relic Wrist Button
             // A - rotate relic claw, on press rotates to relic/over-wall height,

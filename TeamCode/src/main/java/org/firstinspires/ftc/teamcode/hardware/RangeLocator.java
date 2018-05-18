@@ -31,8 +31,11 @@ public class RangeLocator {
     }
 
     public double getLeftDistance(){
-        //return rangeSensors[0].getDistance(DistanceUnit.INCH);
-        return rangeSensors[0].rawUltrasonic() / 2.54;
+        double distance = rangeSensors[0].rawUltrasonic() / 2.54;
+        while(distance > 90.0){
+            distance = rangeSensors[0].rawUltrasonic() / 2.54;
+        }
+        return distance;
     }
 
     public double getLeftAvgDistance(){
@@ -45,8 +48,11 @@ public class RangeLocator {
     }
 
     public double getBackDistance(){
-        //return rangeSensors[1].getDistance(DistanceUnit.INCH);
-        return rangeSensors[1].rawUltrasonic() / 2.54;
+        double distance = rangeSensors[1].rawUltrasonic() / 2.54;
+        while(distance > 90.0){
+            distance = rangeSensors[1].rawUltrasonic() / 2.54;
+        }
+        return distance;
     }
 
     public double getBackAvgDistance(){
@@ -59,8 +65,11 @@ public class RangeLocator {
     }
 
     public double getRightDistance(){
-        //return rangeSensors[2].getDistance(DistanceUnit.INCH);
-        return rangeSensors[2].rawUltrasonic() / 2.54;
+        double distance = rangeSensors[2].rawUltrasonic() / 2.54;
+        while(distance > 90.0){
+            distance = rangeSensors[2].rawUltrasonic() / 2.54;
+        }
+        return distance;
     }
 
     public double getRightAvgDistance(){

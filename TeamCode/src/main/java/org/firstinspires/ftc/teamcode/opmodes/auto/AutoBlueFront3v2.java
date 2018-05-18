@@ -76,38 +76,52 @@ public class AutoBlueFront3v2 extends RelicOpModes {
         bot.jewelRemover.extensionUp();
         bot.jewelRemover.hitterZero();
 
+//
+// Column Distances
+//
         switch(pictograph){
             case RIGHT:
                 columnDistance = 40.5;
-                targetDistance = 23.5;
+                targetDistance = 22.5;
                 extraDistance = 12.0;
                 break;
             case CENTER:
                 columnDistance = 33.0;
-                targetDistance = 53.0;
+                targetDistance = 52.0;
                 extraDistance = 6.0;
                 break;
             case LEFT:
                 columnDistance = 26.5;
-                targetDistance = 40.0;
+                targetDistance = 40.5;
                 extraDistance = 0.0;
                 break;
             default:
                 columnDistance = 26.5;
-                targetDistance = 40.0;
+                targetDistance = 40.5;
                 extraDistance = 0.0;
                 break;
         }
+//
+//
+//
 
         new AutoComMecDriveRam(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, columnDistance).Run();
         new AutoComGyroTurnRam(this, 0.5, 90).Run();
 
         double rightDistance = bot.rangeLocator.getRightDistance();
-        if(rightDistance < 34.5 && pictograph == RelicRecoveryVuMark.CENTER) {
-            rightDistance+=34.5;
-        }
         telemetry.addData("Right Distance", rightDistance);
         telemetry.update();
+
+//
+// Balancing Stone Correction Distance
+// Only for 1st dump and CENTER
+//
+        if(rightDistance < 34.5 && pictograph == RelicRecoveryVuMark.CENTER) {
+            rightDistance += 34.5;
+        }
+//
+//
+//
 
         if(rightDistance > targetDistance){
             new AutoComMecDrive(this, DriveMecanum.DriveDirection.RIGHT, 0.5, rightDistance - targetDistance).Run();
@@ -116,7 +130,7 @@ public class AutoBlueFront3v2 extends RelicOpModes {
         }
 
         bot.glyphPlatform.up();
-        new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, 8.0).Run();
+        new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, 10.0).Run();
         bot.glyphPlatform.gripRelease();
         wait(0.2);
         new AutoComMecDrive(this, DriveMecanum.DriveDirection.FORWARD, 1.0, 8.0).Run();
@@ -129,15 +143,9 @@ public class AutoBlueFront3v2 extends RelicOpModes {
         new AutoComGyroTurnGlyph(this, 1.0, 75.0, bot.glyphDetection.SECOND).Run();
         new AutoComGyroTurnGlyph(this,0.5, 90.0, bot.glyphDetection.SECOND).Run();
         new AutoComMecDriveGlyph(this, DriveMecanum.DriveDirection.FORWARD, 1.0, 8.0, bot.glyphDetection.SECOND).Run();
-        telemetry.addData("Glyph 1", bot.glyphDetection.glyphFound(bot.glyphDetection.FIRST));
-        telemetry.addData("Glyph 2", bot.glyphDetection.glyphFound(bot.glyphDetection.SECOND));
-        telemetry.update();
         new AutoComGyroTurnGlyph(this, 1.0, 105.0, bot.glyphDetection.SECOND).Run();
         new AutoComGyroTurnGlyph(this,0.5, 90.0, bot.glyphDetection.SECOND).Run();
         new AutoComMecDriveGlyph(this, DriveMecanum.DriveDirection.FORWARD, 1.0, 8.0, bot.glyphDetection.SECOND).Run();
-        telemetry.addData("Glyph 1", bot.glyphDetection.glyphFound(bot.glyphDetection.FIRST));
-        telemetry.addData("Glyph 2", bot.glyphDetection.glyphFound(bot.glyphDetection.SECOND));
-        telemetry.update();
         new AutoComGyroTurnGlyph(this, 1.0, 75.0, bot.glyphDetection.SECOND).Run();
         bot.glyphConveyors.stop();
         new AutoComGyroTurn(this,0.5, 90.0).Run();
@@ -149,29 +157,45 @@ public class AutoBlueFront3v2 extends RelicOpModes {
         double backDistance = bot.rangeLocator.getBackDistance();
         telemetry.addData("Back Distance: ", backDistance);
         telemetry.update();
-        targetDistance = 14.0;
+        targetDistance = 18.0;
         if(backDistance > targetDistance){
             new AutoComMecDrive(this, DriveMecanum.DriveDirection.BACKWARD, 0.5, backDistance - targetDistance).Run();
         } else {
             new AutoComMecDriveRam(this, DriveMecanum.DriveDirection.FORWARD, 0.5, targetDistance - backDistance).Run();
         }
-        telemetry.addData("Glyph 1", bot.glyphDetection.glyphFound(bot.glyphDetection.FIRST));
-        telemetry.addData("Glyph 2", bot.glyphDetection.glyphFound(bot.glyphDetection.SECOND));
-        telemetry.update();
 
         rightDistance = bot.rangeLocator.getRightDistance();
-        if (rightDistance < 34.5){
-            rightDistance+=34.5;
+        if(rightDistance > 19.0 && rightDistance < 26.0){
+            new AutoComMecDrive(this, DriveMecanum.DriveDirection.FORWARD, 0.5, 6.0).Run();
+            rightDistance = bot.rangeLocator.getRightDistance();
         }
+
+//
+// Balancing Stone Correction Distance
+// Only for 2nd dump
+//
+        if (rightDistance < 29.0){
+            rightDistance+=29.0;
+        }
+//
+//
+//
+
         telemetry.addData("Right Distance: ", rightDistance);
         telemetry.update();
 
+//
+// 2ND DUMP Target Distance
+//
         targetDistance = 40.0;
         if(rightDistance > targetDistance){
             new AutoComMecDrive(this, DriveMecanum.DriveDirection.RIGHT, 0.5, rightDistance - targetDistance).Run();
         } else {
             new AutoComMecDriveRam(this, DriveMecanum.DriveDirection.LEFT, 0.5, targetDistance - rightDistance).Run();
         }
+//
+//
+//
 
         wait(0.5);
 

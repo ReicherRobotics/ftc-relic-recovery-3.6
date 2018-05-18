@@ -84,4 +84,15 @@ public class RelicExtension {
             stop();
         }
     }
+
+    public void overrideLimits(){
+        MIN_EXTENSION_LIMIT = -MAX_EXTENSION_LIMIT;
+    }
+
+    public void resetLimits(){
+        relicExtMotors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        relicExtMotors[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        MAX_EXTENSION_LIMIT = (int) (MAX_EXTENSION_REVS * TICKS_PER_REV);
+        MIN_EXTENSION_LIMIT = (int) (MIN_EXTENSION_REVS * TICKS_PER_REV);
+    }
 }
